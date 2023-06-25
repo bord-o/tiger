@@ -1,0 +1,3 @@
+
+all:
+	sml main.sml
