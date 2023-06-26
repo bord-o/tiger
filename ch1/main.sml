@@ -93,6 +93,42 @@ structure Straightline = struct
 		
 end
 
+signature EX1  = sig
+		type key
+		type 'a tree
+		val empty : 'a tree
+		val insert : (key * 'a *  'a tree) -> 'a tree
+		val member : (key * 'a tree) -> bool
+		val printT : 'a tree * ('a -> unit) -> unit
+		
+end
+structure Ex1: EX1 = struct
+	type key = string
+	datatype 'a tree = Leaf | Tree of 'a tree * key * 'a * 'a tree
+	val empty = Leaf
+
+	fun insert (key, value, Leaf) = Tree (Leaf, key, value, Leaf)
+	|   insert (key, value, Tree (l, k, v, r)) =
+	        if key < k
+	            then Tree (insert(key, value, l), k, v, r)
+	        else if key > k
+	            then Tree (l, k, v, insert(key, value, r))
+	        else Tree (l, key, value, r) 
+
+	fun member (_, Leaf) = false
+	  | member (key, Tree(l, k,_, r)) =
+			if k = key
+				then true
+			else
+				((member (key, l)) orelse (member (key, r)))
+	
+	fun printT (Leaf, _) = ()
+	|   printT (Tree(l, k,v, r), printfun: 'a -> unit )= (printT (l, printfun); print k;printfun v; printT (r, printfun))
+
+
+end
+
+
 structure Main = struct
 	
 	fun hello () = print "hello from main!\n"
@@ -104,5 +140,22 @@ structure Main = struct
 	val _ = newlines ()
 	val _ = Straightline.interp Straightline.prog
 	val _ = newlines ()
+	val _ = 
+		let
+			val l = ["t", "s", "p", "i", "p", "f","b","s","t"]
+			val l2 = ["a", "b", "c", "d", "e","f","g","h","i"]
+			val tre = List.foldl (fn (letter, tree) => Ex1.insert (letter,0 , tree )) Ex1.empty l
+			val tre2 = List.foldl (fn (letter, tree) => Ex1.insert (letter,0, tree )) Ex1.empty l2
+			val isMem = Ex1.member ("i", tre)
+
+		in
+			print (Bool.toString isMem);
+			newlines ();
+			Ex1.printT (tre, fn x => print (Int.toString x));
+			newlines ();
+			Ex1.printT (tre2, fn x => print (Int.toString x))
+		end
+	val _ = newlines ()
+
 
 end
