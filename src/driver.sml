@@ -15,3 +15,5 @@ struct
 
 end
 
+val _ = Parse.parse "./test1.tig"
+
