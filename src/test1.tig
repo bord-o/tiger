@@ -2,7 +2,7 @@
 /* 
 	an array type 
 	and an array variable 
-	/* nesty boy */	
+	/* nesty boy
 */
 let
 	type  arrtype = array of int
