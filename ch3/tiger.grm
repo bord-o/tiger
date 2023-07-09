@@ -11,7 +11,7 @@
   | BREAK | NIL
   | FUNCTION | VAR | TYPE 
 
-%nonterm empty | program | exp | expseq | dec | decs | tydec | vardec | fundec |
+%nonterm empty | program | exp | expseq | explist | dec | decs | tydec | vardec | fundec |
 	ty | tyfields | recordargs | lvalue 
 
 %pos int
@@ -44,18 +44,38 @@ exp :
 	STRING (print "exp -> STRING\n")
 	| INT (print "exp -> INT\n")
 	| ID (print "exp -> ID\n")
+	| exp EQ exp (print "exp -> comparison\n")
+	| exp TIMES exp (print "exp -> times\n")
+	| exp MINUS exp (print "exp -> minus\n")
+	| exp DIVIDE exp (print "exp -> divide\n")
+	| exp PLUS exp (print "exp -> plus\n")
+	
 
 	| ID LBRACK exp RBRACK OF exp (print "exp -> array creation\n")
 	| ID LBRACE recordargs RBRACE (print "exp -> record creation\n")
+	| ID LPAREN explist RPAREN (print "exp -> function call\n")
 	
+	| IF exp THEN exp ELSE exp (print "exp -> if then else\n")
 	| lvalue ASSIGN exp (print "exp -> assignment\n")
 	| LET decs IN exp END (print "exp -> let in end\n")
-	| exp SEMICOLON exp (print "exp -> exp ; exp\n")
+	| LPAREN expseq RPAREN (print "exp -> expseq\n")
+
+	| NIL (print "exp -> NIL\n")
 	| EOF (print "exp -> EOF\n")
 
+expseq :
+	empty	(print "expseq -> empty\n")
+	| exp 	(print "expseq -> single\n")
+	| exp SEMICOLON expseq 	(print "expseq -> multiple\n")
+
+explist :
+	empty (print "expist -> empty\n")
+	| exp (print "explist -> single\n")
+	| exp COMMA explist (print "explist -> multiple\n")
+	
 decs : 
-	dec (print "decs -> dec\n")
-	| decs dec (print "decs -> decs\n")
+	dec (print "decs -> single dec\n")
+	| decs dec (print "decs -> multiple decs\n")
 
 dec : 
 	tydec	(print "dec -> tydec\n")

@@ -23,7 +23,10 @@ val _ =
 		"../testcases/test1.tig",
 		"../testcases/test2.tig",
 		"../testcases/test3.tig",
-		"../testcases/test4.tig"
+		"../testcases/test4.tig",
+		"../testcases/test5.tig",
+		"../testcases/test6.tig",
+		"../testcases/test7.tig"
 		
 		
 	]
