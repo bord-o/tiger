@@ -17,19 +17,125 @@ local open LrTable in
 val table=let val actionRows =
 "\
 \\001\000\001\000\000\000\000\000\
-\\005\000\000\000\
-\\006\000\000\000\
+\\001\000\001\000\007\000\003\000\006\000\004\000\005\000\036\000\004\000\000\000\
+\\001\000\002\000\019\000\000\000\
+\\001\000\002\000\020\000\000\000\
+\\001\000\002\000\021\000\000\000\
+\\001\000\002\000\031\000\010\000\030\000\028\000\029\000\000\000\
+\\001\000\002\000\033\000\000\000\
+\\001\000\002\000\036\000\000\000\
+\\001\000\002\000\042\000\000\000\
+\\001\000\002\000\047\000\000\000\
+\\001\000\002\000\049\000\000\000\
+\\001\000\006\000\025\000\027\000\024\000\000\000\
+\\001\000\006\000\041\000\000\000\
+\\001\000\006\000\046\000\019\000\045\000\000\000\
+\\001\000\007\000\008\000\038\000\027\000\000\000\
+\\001\000\008\000\026\000\000\000\
+\\001\000\009\000\040\000\000\000\
+\\001\000\011\000\043\000\000\000\
+\\001\000\019\000\023\000\000\000\
+\\001\000\019\000\051\000\000\000\
+\\001\000\027\000\039\000\000\000\
+\\001\000\037\000\018\000\000\000\
+\\001\000\039\000\037\000\000\000\
+\\001\000\042\000\016\000\043\000\015\000\044\000\014\000\000\000\
+\\055\000\007\000\008\000\000\000\
+\\056\000\000\000\
+\\057\000\000\000\
+\\058\000\000\000\
+\\059\000\007\000\008\000\000\000\
+\\060\000\000\000\
+\\061\000\000\000\
+\\063\000\000\000\
+\\064\000\000\000\
+\\065\000\000\000\
+\\066\000\000\000\
+\\067\000\000\000\
+\\068\000\000\000\
+\\069\000\000\000\
+\\070\000\000\000\
+\\071\000\000\000\
+\\072\000\005\000\050\000\000\000\
+\\073\000\007\000\008\000\000\000\
+\\074\000\007\000\008\000\000\000\
+\\075\000\007\000\008\000\000\000\
+\\076\000\007\000\008\000\000\000\
 \"
 val actionRowNumbers =
-"\002\000\001\000\000\000"
+"\001\000\024\000\023\000\025\000\
+\\026\000\029\000\001\000\033\000\
+\\032\000\031\000\021\000\030\000\
+\\002\000\003\000\004\000\028\000\
+\\001\000\018\000\011\000\015\000\
+\\014\000\005\000\001\000\006\000\
+\\007\000\027\000\034\000\022\000\
+\\007\000\035\000\041\000\020\000\
+\\016\000\038\000\012\000\008\000\
+\\017\000\001\000\013\000\009\000\
+\\037\000\036\000\042\000\001\000\
+\\010\000\040\000\043\000\019\000\
+\\007\000\001\000\039\000\044\000\
+\\000\000"
 val gotoT =
 "\
-\\001\000\001\000\002\000\002\000\000\000\
+\\002\000\052\000\003\000\001\000\000\000\
+\\000\000\
+\\005\000\011\000\006\000\010\000\007\000\009\000\008\000\008\000\
+\\009\000\007\000\000\000\
+\\000\000\
+\\000\000\
+\\000\000\
+\\003\000\015\000\000\000\
+\\000\000\
+\\000\000\
+\\000\000\
+\\000\000\
+\\000\000\
+\\000\000\
+\\000\000\
+\\000\000\
+\\000\000\
+\\003\000\020\000\000\000\
+\\000\000\
+\\000\000\
+\\000\000\
+\\000\000\
+\\010\000\026\000\000\000\
+\\003\000\030\000\000\000\
+\\000\000\
+\\001\000\033\000\011\000\032\000\000\000\
+\\000\000\
+\\000\000\
+\\000\000\
+\\001\000\033\000\011\000\036\000\000\000\
+\\000\000\
+\\000\000\
+\\000\000\
+\\000\000\
+\\000\000\
+\\000\000\
+\\000\000\
+\\000\000\
+\\003\000\042\000\000\000\
+\\000\000\
+\\000\000\
+\\000\000\
+\\000\000\
+\\000\000\
+\\003\000\046\000\000\000\
+\\000\000\
+\\000\000\
+\\000\000\
+\\000\000\
+\\001\000\033\000\011\000\050\000\000\000\
+\\003\000\051\000\000\000\
+\\000\000\
 \\000\000\
 \\000\000\
 \"
-val numstates = 3
-val numrules = 2
+val numstates = 53
+val numrules = 22
 val s = ref "" and index = ref 0
 val string_to_int = fn () => 
 let val i = !index
@@ -180,14 +286,148 @@ fn (i392,defaultPos,stack,
     (()):arg) =>
 case (i392,stack)
 of  ( 0, ( ( _, ( MlyValue.ntVOID exp1, exp1left, exp1right)) :: rest671)) => let val  result = MlyValue.ntVOID (fn _ => ( let val  exp1 = exp1 ()
- in ((*#line 35.20 "tiger.grm"*)(*#line 182.1 "tiger.grm.sml"*)
+ in ((*#line 36.17 "tiger.grm"*)(*#line 288.1 "tiger.grm.sml"*)
 )
 end; ()))
  in ( LrTable.NT 1, ( result, exp1left, exp1right), rest671)
 end
-|  ( 1, ( rest671)) => let val  result = MlyValue.ntVOID (fn _ => ((*#line 38.11 "tiger.grm"*)(*#line 188.1 "tiger.grm.sml"*)
+|  ( 1, ( ( _, ( MlyValue.STRING STRING1, STRING1left, STRING1right)) :: rest671)) => let val  result = MlyValue.ntVOID (fn _ => ( let val  (STRING as STRING1) = STRING1 ()
+ in ((*#line 40.11 "tiger.grm"*)print "exp -> STRING\n"(*#line 294.1 "tiger.grm.sml"*)
+)
+end; ()))
+ in ( LrTable.NT 2, ( result, STRING1left, STRING1right), rest671)
+end
+|  ( 2, ( ( _, ( MlyValue.INT INT1, INT1left, INT1right)) :: rest671)) => let val  result = MlyValue.ntVOID (fn _ => ( let val  INT1 = INT1 ()
+ in ((*#line 41.10 "tiger.grm"*)print "exp -> STRING\n"(*#line 300.1 "tiger.grm.sml"*)
+)
+end; ()))
+ in ( LrTable.NT 2, ( result, INT1left, INT1right), rest671)
+end
+|  ( 3, ( ( _, ( _, _, END1right)) :: ( _, ( MlyValue.ntVOID exp1, _, _)) :: _ :: ( _, ( MlyValue.ntVOID decs1, _, _)) :: ( _, ( _, LET1left, _)) :: rest671)) => let val  result = MlyValue.ntVOID (fn _ => ( let val  decs1 = decs1 ()
+ val  (exp as exp1) = exp1 ()
+ in ((*#line 42.26 "tiger.grm"*)print "exp -> let in end\n"(*#line 306.1 "tiger.grm.sml"*)
+)
+end; ()))
+ in ( LrTable.NT 2, ( result, LET1left, END1right), rest671)
+end
+|  ( 4, ( ( _, ( MlyValue.ntVOID exp2, _, exp2right)) :: _ :: ( _, ( MlyValue.ntVOID exp1, exp1left, _)) :: rest671)) => let val  result = MlyValue.ntVOID (fn _ => ( let val  (exp as exp1) = exp1 ()
+ val  exp2 = exp2 ()
+ in ((*#line 43.24 "tiger.grm"*)print "exp -> exp ; exp\n"(*#line 313.1 "tiger.grm.sml"*)
+)
+end; ()))
+ in ( LrTable.NT 2, ( result, exp1left, exp2right), rest671)
+end
+|  ( 5, ( ( _, ( _, EOF1left, EOF1right)) :: rest671)) => let val  result = MlyValue.ntVOID (fn _ => ((*#line 44.10 "tiger.grm"*)print "exp -> EOF\n"(*#line 320.1 "tiger.grm.sml"*)
 ))
- in ( LrTable.NT 0, ( result, defaultPos, defaultPos), rest671)
+ in ( LrTable.NT 2, ( result, EOF1left, EOF1right), rest671)
+end
+|  ( 6, ( ( _, ( MlyValue.ntVOID dec1, dec1left, dec1right)) :: rest671)) => let val  result = MlyValue.ntVOID (fn _ => ( let val  (dec as dec1) = dec1 ()
+ in ((*#line 47.8 "tiger.grm"*)print "decs -> dec\n"(*#line 324.1 "tiger.grm.sml"*)
+)
+end; ()))
+ in ( LrTable.NT 5, ( result, dec1left, dec1right), rest671)
+end
+|  ( 7, ( ( _, ( MlyValue.ntVOID decs1, decs1left, decs1right)) :: rest671)) => let val  result = MlyValue.ntVOID (fn _ => ( let val  (decs as decs1) = decs1 ()
+ in ((*#line 48.11 "tiger.grm"*)print "decs -> decs\n"(*#line 330.1 "tiger.grm.sml"*)
+)
+end; ()))
+ in ( LrTable.NT 5, ( result, decs1left, decs1right), rest671)
+end
+|  ( 8, ( ( _, ( MlyValue.ntVOID tydec1, tydec1left, tydec1right)) :: rest671)) => let val  result = MlyValue.ntVOID (fn _ => ( let val  tydec1 = tydec1 ()
+ in ((*#line 51.10 "tiger.grm"*)(*#line 336.1 "tiger.grm.sml"*)
+)
+end; ()))
+ in ( LrTable.NT 4, ( result, tydec1left, tydec1right), rest671)
+end
+|  ( 9, ( ( _, ( MlyValue.ntVOID vardec1, vardec1left, vardec1right)) :: rest671)) => let val  result = MlyValue.ntVOID (fn _ => ( let val  vardec1 = vardec1 ()
+ in ((*#line 52.13 "tiger.grm"*)(*#line 342.1 "tiger.grm.sml"*)
+)
+end; ()))
+ in ( LrTable.NT 4, ( result, vardec1left, vardec1right), rest671)
+end
+|  ( 10, ( ( _, ( MlyValue.ntVOID fundec1, fundec1left, fundec1right)) :: rest671)) => let val  result = MlyValue.ntVOID (fn _ => ( let val  fundec1 = fundec1 ()
+ in ((*#line 53.13 "tiger.grm"*)(*#line 348.1 "tiger.grm.sml"*)
+)
+end; ()))
+ in ( LrTable.NT 4, ( result, fundec1left, fundec1right), rest671)
+end
+|  ( 11, ( ( _, ( MlyValue.ntVOID ty1, _, ty1right)) :: _ :: ( _, ( MlyValue.ID ID1, _, _)) :: ( _, ( _, TYPE1left, _)) :: rest671)) => let val  result = MlyValue.ntVOID (fn _ => ( let val  ID1 = ID1 ()
+ val  ty1 = ty1 ()
+ in ((*#line 55.25 "tiger.grm"*)(*#line 354.1 "tiger.grm.sml"*)
+)
+end; ()))
+ in ( LrTable.NT 6, ( result, TYPE1left, ty1right), rest671)
+end
+|  ( 12, ( ( _, ( MlyValue.ID ID1, ID1left, ID1right)) :: rest671)) => let val  result = MlyValue.ntVOID (fn _ => ( let val  ID1 = ID1 ()
+ in ((*#line 58.7 "tiger.grm"*)(*#line 361.1 "tiger.grm.sml"*)
+)
+end; ()))
+ in ( LrTable.NT 9, ( result, ID1left, ID1right), rest671)
+end
+|  ( 13, ( ( _, ( _, _, RBRACK1right)) :: ( _, ( MlyValue.ntVOID tyfields1, _, _)) :: ( _, ( _, LBRACK1left, _)) :: rest671)) => let val  result = MlyValue.ntVOID (fn _ => ( let val  tyfields1 = tyfields1 ()
+ in ((*#line 59.29 "tiger.grm"*)(*#line 367.1 "tiger.grm.sml"*)
+)
+end; ()))
+ in ( LrTable.NT 9, ( result, LBRACK1left, RBRACK1right), rest671)
+end
+|  ( 14, ( ( _, ( MlyValue.ID ID1, _, ID1right)) :: _ :: ( _, ( _, ARRAY1left, _)) :: rest671)) => let val  result = MlyValue.ntVOID (fn _ => ( let val  ID1 = ID1 ()
+ in ((*#line 60.18 "tiger.grm"*)(*#line 373.1 "tiger.grm.sml"*)
+)
+end; ()))
+ in ( LrTable.NT 9, ( result, ARRAY1left, ID1right), rest671)
+end
+|  ( 15, ( ( _, ( MlyValue.ntVOID empty1, empty1left, empty1right)) :: rest671)) => let val  result = MlyValue.ntVOID (fn _ => ( let val  empty1 = empty1 ()
+ in ((*#line 63.10 "tiger.grm"*)(*#line 379.1 "tiger.grm.sml"*)
+)
+end; ()))
+ in ( LrTable.NT 10, ( result, empty1left, empty1right), rest671)
+end
+|  ( 16, ( ( _, ( MlyValue.ntVOID tyfields1, _, tyfields1right)) :: _ :: ( _, ( MlyValue.ID ID2, _, _)) :: _ :: ( _, ( MlyValue.ID ID1, ID1left, _)) :: rest671)) => let val  result = MlyValue.ntVOID (fn _ => ( let val  ID1 = ID1 ()
+ val  ID2 = ID2 ()
+ val  tyfields1 = tyfields1 ()
+ in ((*#line 64.33 "tiger.grm"*)(*#line 385.1 "tiger.grm.sml"*)
+)
+end; ()))
+ in ( LrTable.NT 10, ( result, ID1left, tyfields1right), rest671)
+end
+|  ( 17, ( ( _, ( MlyValue.ID ID2, _, ID2right)) :: _ :: ( _, ( MlyValue.ID ID1, ID1left, _)) :: rest671)) => let val  result = MlyValue.ntVOID (fn _ => ( let val  ID1 = ID1 ()
+ val  ID2 = ID2 ()
+ in ((*#line 65.19 "tiger.grm"*)(*#line 393.1 "tiger.grm.sml"*)
+)
+end; ()))
+ in ( LrTable.NT 10, ( result, ID1left, ID2right), rest671)
+end
+|  ( 18, ( ( _, ( MlyValue.ntVOID exp1, _, exp1right)) :: _ :: ( _, ( MlyValue.ID ID1, _, _)) :: ( _, ( _, VAR1left, _)) :: rest671)) => let val  result = MlyValue.ntVOID (fn _ => ( let val  ID1 = ID1 ()
+ val  exp1 = exp1 ()
+ in ((*#line 68.22 "tiger.grm"*)(*#line 400.1 "tiger.grm.sml"*)
+)
+end; ()))
+ in ( LrTable.NT 7, ( result, VAR1left, exp1right), rest671)
+end
+|  ( 19, ( ( _, ( MlyValue.ntVOID exp1, _, exp1right)) :: _ :: ( _, ( MlyValue.ID ID2, _, _)) :: _ :: ( _, ( MlyValue.ID ID1, _, _)) :: ( _, ( _, VAR1left, _)) :: rest671)) => let val  result = MlyValue.ntVOID (fn _ => ( let val  ID1 = ID1 ()
+ val  ID2 = ID2 ()
+ val  exp1 = exp1 ()
+ in ((*#line 69.33 "tiger.grm"*)(*#line 407.1 "tiger.grm.sml"*)
+)
+end; ()))
+ in ( LrTable.NT 7, ( result, VAR1left, exp1right), rest671)
+end
+|  ( 20, ( ( _, ( MlyValue.ntVOID exp1, _, exp1right)) :: _ :: _ :: ( _, ( MlyValue.ntVOID tyfields1, _, _)) :: _ :: ( _, ( MlyValue.ID ID1, _, _)) :: ( _, ( _, FUNCTION1left, _)) :: rest671)) => let val  result = MlyValue.ntVOID (fn _ => ( let val  ID1 = ID1 ()
+ val  tyfields1 = tyfields1 ()
+ val  exp1 = exp1 ()
+ in ((*#line 72.46 "tiger.grm"*)(*#line 415.1 "tiger.grm.sml"*)
+)
+end; ()))
+ in ( LrTable.NT 8, ( result, FUNCTION1left, exp1right), rest671)
+end
+|  ( 21, ( ( _, ( MlyValue.ntVOID exp1, _, exp1right)) :: _ :: ( _, ( MlyValue.ID ID2, _, _)) :: _ :: _ :: ( _, ( MlyValue.ntVOID tyfields1, _, _)) :: _ :: ( _, ( MlyValue.ID ID1, _, _)) :: ( _, ( _, FUNCTION1left, _)) :: rest671)) => let val  result = MlyValue.ntVOID (fn _ => ( let val  ID1 = ID1 ()
+ val  tyfields1 = tyfields1 ()
+ val  ID2 = ID2 ()
+ val  exp1 = exp1 ()
+ in ((*#line 73.57 "tiger.grm"*)(*#line 423.1 "tiger.grm.sml"*)
+)
+end; ()))
+ in ( LrTable.NT 8, ( result, FUNCTION1left, exp1right), rest671)
 end
 | _ => raise (mlyAction i392)
 end

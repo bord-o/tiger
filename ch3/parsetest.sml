@@ -19,7 +19,7 @@ struct
 end
 
 val _ = 
-	Parse.parse "../book-code/testcases/test1.tig"
+	Parse.parse "../testcases/test1.tig"
 
 
 

@@ -1,19 +1,33 @@
+2 shift/reduce conflicts
+non-shiftable terminal used on the rhs of 0 rules
+1 rule not reduced
+
+warning: rule <decs : decs > will never be reduced
+warning: non-shiftable terminal EOFappears on the rhs of <exp : EOF >
+error:  state 10: shift/reduce conflict (shift IN, reduce by rule 7)
+error:  state 15: shift/reduce conflict (shift SEMICOLON, reduce by rule 4)
 
 state 0:
 
 	program : . exp 
 
+	EOF	shift 5
+	INT	shift 4
+	STRING	shift 3
+	LET	shift 2
 
+	program	goto 52
 	exp	goto 1
-	program	goto 2
 
-	.	reduce by rule 1
+	.	error
 
 
 state 1:
 
 	program : exp .  (reduce by rule 0)
+	exp : exp . SEMICOLON exp 
 
+	SEMICOLON	shift 6
 
 
 	.	reduce by rule 0
@@ -21,11 +35,559 @@ state 1:
 
 state 2:
 
+	exp : LET . decs IN exp END 
+
+	FUNCTION	shift 14
+	VAR	shift 13
+	TYPE	shift 12
+
+	dec	goto 11
+	decs	goto 10
+	tydec	goto 9
+	vardec	goto 8
+	fundec	goto 7
+
+	.	error
+
+
+state 3:
+
+	exp : STRING .  (reduce by rule 1)
+
+
+
+	.	reduce by rule 1
+
+
+state 4:
+
+	exp : INT .  (reduce by rule 2)
+
+
+
+	.	reduce by rule 2
+
+
+state 5:
+
+	exp : EOF .  (reduce by rule 5)
+
+
+
+	.	reduce by rule 5
+
+
+state 6:
+
+	exp : exp SEMICOLON . exp 
+
+	EOF	shift 5
+	INT	shift 4
+	STRING	shift 3
+	LET	shift 2
+
+	exp	goto 15
+
+	.	error
+
+
+state 7:
+
+	dec : fundec .  (reduce by rule 10)
+
+
+
+	.	reduce by rule 10
+
+
+state 8:
+
+	dec : vardec .  (reduce by rule 9)
+
+
+
+	.	reduce by rule 9
+
+
+state 9:
+
+	dec : tydec .  (reduce by rule 8)
+
+
+
+	.	reduce by rule 8
+
+error:  state 10: shift/reduce conflict (shift IN, reduce by rule 7)
+
+state 10:
+
+	exp : LET decs . IN exp END 
+	decs : decs .  (reduce by rule 7)
+
+	IN	shift 16
+
+
+	.	error
+
+
+state 11:
+
+	decs : dec .  (reduce by rule 6)
+
+
+
+	.	reduce by rule 6
+
+
+state 12:
+
+	tydec : TYPE . ID EQ ty 
+
+	ID	shift 17
+
+
+	.	error
+
+
+state 13:
+
+	vardec : VAR . ID ASSIGN exp 
+	vardec : VAR . ID COLON ID ASSIGN exp 
+
+	ID	shift 18
+
+
+	.	error
+
+
+state 14:
+
+	fundec : FUNCTION . ID LPAREN tyfields RPAREN EQ exp 
+	fundec : FUNCTION . ID LPAREN tyfields RPAREN COLON ID EQ exp 
+
+	ID	shift 19
+
+
+	.	error
+
+error:  state 15: shift/reduce conflict (shift SEMICOLON, reduce by rule 4)
+
+state 15:
+
+	exp : exp . SEMICOLON exp 
+	exp : exp SEMICOLON exp .  (reduce by rule 4)
+
+	SEMICOLON	shift 6
+
+
+	.	reduce by rule 4
+
+
+state 16:
+
+	exp : LET decs IN . exp END 
+
+	EOF	shift 5
+	INT	shift 4
+	STRING	shift 3
+	LET	shift 2
+
+	exp	goto 20
+
+	.	error
+
+
+state 17:
+
+	tydec : TYPE ID . EQ ty 
+
+	EQ	shift 21
+
+
+	.	error
+
+
+state 18:
+
+	vardec : VAR ID . ASSIGN exp 
+	vardec : VAR ID . COLON ID ASSIGN exp 
+
+	COLON	shift 23
+	ASSIGN	shift 22
+
+
+	.	error
+
+
+state 19:
+
+	fundec : FUNCTION ID . LPAREN tyfields RPAREN EQ exp 
+	fundec : FUNCTION ID . LPAREN tyfields RPAREN COLON ID EQ exp 
+
+	LPAREN	shift 24
+
+
+	.	error
+
+
+state 20:
+
+	exp : LET decs IN exp . END 
+	exp : exp . SEMICOLON exp 
+
+	SEMICOLON	shift 6
+	END	shift 25
+
+
+	.	error
+
+
+state 21:
+
+	tydec : TYPE ID EQ . ty 
+
+	ID	shift 29
+	LBRACK	shift 28
+	ARRAY	shift 27
+
+	ty	goto 26
+
+	.	error
+
+
+state 22:
+
+	vardec : VAR ID ASSIGN . exp 
+
+	EOF	shift 5
+	INT	shift 4
+	STRING	shift 3
+	LET	shift 2
+
+	exp	goto 30
+
+	.	error
+
+
+state 23:
+
+	vardec : VAR ID COLON . ID ASSIGN exp 
+
+	ID	shift 31
+
+
+	.	error
+
+
+state 24:
+
+	fundec : FUNCTION ID LPAREN . tyfields RPAREN EQ exp 
+	fundec : FUNCTION ID LPAREN . tyfields RPAREN COLON ID EQ exp 
+
+	ID	shift 34
+
+	empty	goto 33
+	tyfields	goto 32
+
+	.	error
+
+
+state 25:
+
+	exp : LET decs IN exp END .  (reduce by rule 3)
+
+
+
+	.	reduce by rule 3
+
+
+state 26:
+
+	tydec : TYPE ID EQ ty .  (reduce by rule 11)
+
+
+
+	.	reduce by rule 11
+
+
+state 27:
+
+	ty : ARRAY . OF ID 
+
+	OF	shift 35
+
+
+	.	error
+
+
+state 28:
+
+	ty : LBRACK . tyfields RBRACK 
+
+	ID	shift 34
+
+	empty	goto 33
+	tyfields	goto 36
+
+	.	error
+
+
+state 29:
+
+	ty : ID .  (reduce by rule 12)
+
+
+
+	.	reduce by rule 12
+
+
+state 30:
+
+	exp : exp . SEMICOLON exp 
+	vardec : VAR ID ASSIGN exp .  (reduce by rule 18)
+
+	SEMICOLON	shift 6
+
+
+	.	reduce by rule 18
+
+
+state 31:
+
+	vardec : VAR ID COLON ID . ASSIGN exp 
+
+	ASSIGN	shift 37
+
+
+	.	error
+
+
+state 32:
+
+	fundec : FUNCTION ID LPAREN tyfields . RPAREN EQ exp 
+	fundec : FUNCTION ID LPAREN tyfields . RPAREN COLON ID EQ exp 
+
+	RPAREN	shift 38
+
+
+	.	error
+
+
+state 33:
+
+	tyfields : empty .  (reduce by rule 15)
+
+
+
+	.	reduce by rule 15
+
+
+state 34:
+
+	tyfields : ID . COLON ID COMMA tyfields 
+	tyfields : ID . COLON ID 
+
+	COLON	shift 39
+
+
+	.	error
+
+
+state 35:
+
+	ty : ARRAY OF . ID 
+
+	ID	shift 40
+
+
+	.	error
+
+
+state 36:
+
+	ty : LBRACK tyfields . RBRACK 
+
+	RBRACK	shift 41
+
+
+	.	error
+
+
+state 37:
+
+	vardec : VAR ID COLON ID ASSIGN . exp 
+
+	EOF	shift 5
+	INT	shift 4
+	STRING	shift 3
+	LET	shift 2
+
+	exp	goto 42
+
+	.	error
+
+
+state 38:
+
+	fundec : FUNCTION ID LPAREN tyfields RPAREN . EQ exp 
+	fundec : FUNCTION ID LPAREN tyfields RPAREN . COLON ID EQ exp 
+
+	COLON	shift 44
+	EQ	shift 43
+
+
+	.	error
+
+
+state 39:
+
+	tyfields : ID COLON . ID COMMA tyfields 
+	tyfields : ID COLON . ID 
+
+	ID	shift 45
+
+
+	.	error
+
+
+state 40:
+
+	ty : ARRAY OF ID .  (reduce by rule 14)
+
+
+
+	.	reduce by rule 14
+
+
+state 41:
+
+	ty : LBRACK tyfields RBRACK .  (reduce by rule 13)
+
+
+
+	.	reduce by rule 13
+
+
+state 42:
+
+	exp : exp . SEMICOLON exp 
+	vardec : VAR ID COLON ID ASSIGN exp .  (reduce by rule 19)
+
+	SEMICOLON	shift 6
+
+
+	.	reduce by rule 19
+
+
+state 43:
+
+	fundec : FUNCTION ID LPAREN tyfields RPAREN EQ . exp 
+
+	EOF	shift 5
+	INT	shift 4
+	STRING	shift 3
+	LET	shift 2
+
+	exp	goto 46
+
+	.	error
+
+
+state 44:
+
+	fundec : FUNCTION ID LPAREN tyfields RPAREN COLON . ID EQ exp 
+
+	ID	shift 47
+
+
+	.	error
+
+
+state 45:
+
+	tyfields : ID COLON ID . COMMA tyfields 
+	tyfields : ID COLON ID .  (reduce by rule 17)
+
+	COMMA	shift 48
+
+
+	.	reduce by rule 17
+
+
+state 46:
+
+	exp : exp . SEMICOLON exp 
+	fundec : FUNCTION ID LPAREN tyfields RPAREN EQ exp .  (reduce by rule 20)
+
+	SEMICOLON	shift 6
+
+
+	.	reduce by rule 20
+
+
+state 47:
+
+	fundec : FUNCTION ID LPAREN tyfields RPAREN COLON ID . EQ exp 
+
+	EQ	shift 49
+
+
+	.	error
+
+
+state 48:
+
+	tyfields : ID COLON ID COMMA . tyfields 
+
+	ID	shift 34
+
+	empty	goto 33
+	tyfields	goto 50
+
+	.	error
+
+
+state 49:
+
+	fundec : FUNCTION ID LPAREN tyfields RPAREN COLON ID EQ . exp 
+
+	EOF	shift 5
+	INT	shift 4
+	STRING	shift 3
+	LET	shift 2
+
+	exp	goto 51
+
+	.	error
+
+
+state 50:
+
+	tyfields : ID COLON ID COMMA tyfields .  (reduce by rule 16)
+
+
+
+	.	reduce by rule 16
+
+
+state 51:
+
+	exp : exp . SEMICOLON exp 
+	fundec : FUNCTION ID LPAREN tyfields RPAREN COLON ID EQ exp .  (reduce by rule 21)
+
+	SEMICOLON	shift 6
+
+
+	.	reduce by rule 21
+
+
+state 52:
+
 
 	EOF	accept
 
 
 	.	error
 
-1 of 4 action table entries left after compaction
-2 goto table entries
+41 of 120 action table entries left after compaction
+20 goto table entries

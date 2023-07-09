@@ -11,7 +11,7 @@
   | BREAK | NIL
   | FUNCTION | VAR | TYPE 
 
-%nonterm program | exp | expseq | dec | decs | tydec | vardec | funcdec |
+%nonterm empty | program | exp | expseq | dec | decs | tydec | vardec | fundec |
 	ty | tyfields | lvalue 
 
 %pos int
@@ -33,6 +33,41 @@
 
 %%
 
-program	: exp				()
+program	: exp ()
 
-exp: 			()
+	
+exp : 
+	STRING (print "exp -> STRING\n")
+	| INT (print "exp -> STRING\n")
+	| LET decs IN exp END (print "exp -> let in end\n")
+	| exp SEMICOLON exp (print "exp -> exp ; exp\n")
+	| EOF (print "exp -> EOF\n")
+
+decs : 
+	dec (print "decs -> dec\n")
+	| decs (print "decs -> decs\n")
+
+dec : 
+	tydec	()
+	| vardec	()
+	| fundec	()
+
+tydec : TYPE ID EQ ty	()
+
+ty : 
+	ID	()
+	| LBRACK tyfields RBRACK	()
+	| ARRAY OF ID	()
+
+tyfields : 
+	empty	()
+	| ID COLON ID COMMA tyfields	()
+	| ID COLON ID 	()
+
+vardec :
+	VAR ID ASSIGN exp	()
+	| VAR ID COLON ID ASSIGN exp	()
+
+fundec :
+	FUNCTION ID LPAREN tyfields RPAREN EQ exp	()
+	| FUNCTION ID LPAREN tyfields RPAREN COLON ID EQ exp	()
