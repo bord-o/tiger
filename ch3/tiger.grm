@@ -44,20 +44,30 @@ exp :
 	STRING (print "exp -> STRING\n")
 	| INT (print "exp -> INT\n")
 	| ID (print "exp -> ID\n")
-	| exp EQ exp (print "exp -> comparison\n")
+	| exp EQ exp (print "exp -> equal\n")
+	| exp NEQ exp (print "exp -> not equal\n")
 	| exp TIMES exp (print "exp -> times\n")
 	| exp MINUS exp (print "exp -> minus\n")
 	| exp DIVIDE exp (print "exp -> divide\n")
 	| exp PLUS exp (print "exp -> plus\n")
+	| exp GT exp (print "exp -> greater than\n")
+	| exp LT exp (print "exp -> less than\n")
+	| exp GE exp (print "exp -> greater equal\n")
+	| exp LE exp (print "exp -> less equal\n")
+	| exp AND exp (print "exp -> and \n")
+	| exp OR exp (print "exp -> or \n")
+	
 	
 
 	| ID LBRACK exp RBRACK OF exp (print "exp -> array creation\n")
 	| ID LBRACE recordargs RBRACE (print "exp -> record creation\n")
 	| ID LPAREN explist RPAREN (print "exp -> function call\n")
 	
+	| FOR ID ASSIGN exp TO exp DO exp (print "exp -> for")
 	| IF exp THEN exp ELSE exp (print "exp -> if then else\n")
+	| WHILE LPAREN exp RPAREN DO exp (print "exp -> while do\n")
 	| lvalue ASSIGN exp (print "exp -> assignment\n")
-	| LET decs IN exp END (print "exp -> let in end\n")
+	| LET decs IN expseq END (print "exp -> let in end\n")
 	| LPAREN expseq RPAREN (print "exp -> expseq\n")
 
 	| NIL (print "exp -> NIL\n")
@@ -112,3 +122,4 @@ recordargs :
 	| ID EQ exp (print "recordargs-> single\n")
 	| ID EQ exp COMMA recordargs (print "recordargs -> multiple\n")
 	
+empty : ()
