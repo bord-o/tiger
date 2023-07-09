@@ -22,7 +22,9 @@ val _ =
 	List.app (fn prog => (print ("Parsing: " ^ prog ^ "\n"); Parse.parse prog; print "\n\n" )) [
 		"../testcases/test1.tig",
 		"../testcases/test2.tig",
-		"../testcases/test3.tig"
+		"../testcases/test3.tig",
+		"../testcases/test4.tig"
+		
 		
 	]
 

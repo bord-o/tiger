@@ -12,7 +12,7 @@
   | FUNCTION | VAR | TYPE 
 
 %nonterm empty | program | exp | expseq | dec | decs | tydec | vardec | fundec |
-	ty | tyfields | lvalue 
+	ty | tyfields | recordargs | lvalue 
 
 %pos int
 %verbose
@@ -44,7 +44,10 @@ exp :
 	STRING (print "exp -> STRING\n")
 	| INT (print "exp -> INT\n")
 	| ID (print "exp -> ID\n")
+
 	| ID LBRACK exp RBRACK OF exp (print "exp -> array creation\n")
+	| ID LBRACE recordargs RBRACE (print "exp -> record creation\n")
+	
 	| lvalue ASSIGN exp (print "exp -> assignment\n")
 	| LET decs IN exp END (print "exp -> let in end\n")
 	| exp SEMICOLON exp (print "exp -> exp ; exp\n")
@@ -63,7 +66,7 @@ tydec : TYPE ID EQ ty	(print "tydec -> type id eq ty\n")
 
 ty : 
 	ID	(print "ty -> ID\n")
-	| LBRACK tyfields RBRACK	(print "ty -> {tyyfields}\n")
+	| LBRACE tyfields RBRACE (print "ty -> rec tyfields\n")
 	| ARRAY OF ID	(print "ty -> array of id\n")
 
 tyfields : 
@@ -83,3 +86,9 @@ lvalue :
 	ID (print "lvalue -> ID\n")
 	| lvalue DOT ID (print "lvalue -> lvalue.ID\n")
 	| lvalue LBRACK exp RBRACK (print "lvalue ->lvalue[exp]\n")
+
+recordargs :
+	empty (print "recordargs -> empty\n")
+	| ID EQ exp (print "recordargs-> single\n")
+	| ID EQ exp COMMA recordargs (print "recordargs -> multiple\n")
+	
