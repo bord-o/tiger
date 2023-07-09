@@ -38,36 +38,38 @@ program	: exp ()
 	
 exp : 
 	STRING (print "exp -> STRING\n")
-	| INT (print "exp -> STRING\n")
+	| INT (print "exp -> INT\n")
+	| ID (print "exp -> ID\n")
+	| ID LBRACK exp RBRACK OF exp (print "exp -> array creation\n")
 	| LET decs IN exp END (print "exp -> let in end\n")
 	| exp SEMICOLON exp (print "exp -> exp ; exp\n")
 	| EOF (print "exp -> EOF\n")
 
 decs : 
 	dec (print "decs -> dec\n")
-	| decs (print "decs -> decs\n")
+	| decs dec (print "decs -> decs\n")
 
 dec : 
-	tydec	()
-	| vardec	()
-	| fundec	()
+	tydec	(print "dec -> tydec\n")
+	| vardec	(print "dec -> tydec\n")
+	| fundec	(print "dec -> tydec\n")
 
-tydec : TYPE ID EQ ty	()
+tydec : TYPE ID EQ ty	(print "tydec -> type id eq ty\n")
 
 ty : 
-	ID	()
-	| LBRACK tyfields RBRACK	()
-	| ARRAY OF ID	()
+	ID	(print "ty -> ID\n")
+	| LBRACK tyfields RBRACK	(print "ty -> {tyyfields}\n")
+	| ARRAY OF ID	(print "ty -> array of id\n")
 
 tyfields : 
-	empty	()
-	| ID COLON ID COMMA tyfields	()
-	| ID COLON ID 	()
+	empty	(print "tyfields -> empty\n")
+	| ID COLON ID COMMA tyfields	(print "tyfields -> w/ comma\n")
+	| ID COLON ID 	(print "tyfields -> single\n")
 
 vardec :
-	VAR ID ASSIGN exp	()
-	| VAR ID COLON ID ASSIGN exp	()
+	VAR ID ASSIGN exp	(print "vardec -> w/o type\n")
+	| VAR ID COLON ID ASSIGN exp	(print "vardec -> w/ type\n")
 
 fundec :
-	FUNCTION ID LPAREN tyfields RPAREN EQ exp	()
-	| FUNCTION ID LPAREN tyfields RPAREN COLON ID EQ exp	()
+	FUNCTION ID LPAREN tyfields RPAREN EQ exp	(print "fundec -> w/o type\n")
+	| FUNCTION ID LPAREN tyfields RPAREN COLON ID EQ exp	(print "fundec -> w/type \n")

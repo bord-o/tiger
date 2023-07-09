@@ -19,7 +19,12 @@ struct
 end
 
 val _ = 
-	Parse.parse "../testcases/test1.tig"
+	List.app (fn prog => (print ("Parsing: " ^ prog ^ "\n"); Parse.parse prog; print "\n\n" )) [
+		"../testcases/test1.tig",
+		"../testcases/test2.tig",
+		"../testcases/test3.tig"
+		
+	]
 
 
 

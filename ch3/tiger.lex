@@ -78,10 +78,10 @@ all_chars =  [\s\S];
 <INITIAL>"-" => (Tokens.MINUS(yypos,yypos+1));
 <INITIAL>"+" => (Tokens.PLUS(yypos,yypos+1));
 <INITIAL>"." => (Tokens.DOT(yypos,yypos+1));
-<INITIAL>"[" => (Tokens.LBRACE(yypos,yypos+1));
-<INITIAL>"]" => (Tokens.RBRACE(yypos,yypos+1));
-<INITIAL>"{" => (Tokens.LBRACK(yypos,yypos+1));
-<INITIAL>"}" => (Tokens.RBRACK(yypos,yypos+1));
+<INITIAL>"[" => (Tokens.LBRACK(yypos,yypos+1));
+<INITIAL>"]" => (Tokens.RBRACK(yypos,yypos+1));
+<INITIAL>"{" => (Tokens.LBRACE(yypos,yypos+1));
+<INITIAL>"}" => (Tokens.RBRACE(yypos,yypos+1));
 <INITIAL>"(" => (Tokens.LPAREN(yypos,yypos+1));
 <INITIAL>")" => (Tokens.RPAREN(yypos,yypos+1));
 
