@@ -12,7 +12,7 @@
   | FUNCTION | VAR | TYPE 
 
 %nonterm empty | program | exp | expseq | explist | dec | decs | tydec | vardec | fundec |
-	ty | tyfields | recordargs | lvalue 
+	ty | tyfields | recordargs | lvalue | lvalue_exp
 
 %pos int
 %verbose
@@ -65,7 +65,9 @@ exp :
 	
 	| FOR ID ASSIGN exp TO exp DO exp (print "exp -> for")
 	| IF exp THEN exp ELSE exp (print "exp -> if then else\n")
-	| WHILE LPAREN exp RPAREN DO exp (print "exp -> while do\n")
+	| IF exp THEN exp (print "exp -> if then\n")
+	| WHILE exp DO exp (print "exp -> while do\n")
+	| lvalue_exp (print "exp -> lvalue_exp\n")
 	| lvalue ASSIGN exp (print "exp -> assignment\n")
 	| LET decs IN expseq END (print "exp -> let in end\n")
 	| LPAREN expseq RPAREN (print "exp -> expseq\n")
@@ -114,9 +116,13 @@ fundec :
 
 lvalue :
 	ID (print "lvalue -> ID\n")
-	| lvalue DOT ID (print "lvalue -> lvalue.ID\n")
-	| lvalue LBRACK exp RBRACK (print "lvalue ->lvalue[exp]\n")
+	| lvalue_exp (print "lvalue -> lvalue_exp\n")
 
+lvalue_exp :
+	lvalue DOT ID (print "lvalue_exp -> lvalue.ID\n")
+	| lvalue LBRACK exp RBRACK (print "lvalue_exp ->lvalue[exp]\n")
+	| ID LBRACK exp RBRACK (print "lvalue_exp ->ID[exp]\n")
+	
 recordargs :
 	empty (print "recordargs -> empty\n")
 	| ID EQ exp (print "recordargs-> single\n")
