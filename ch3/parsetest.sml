@@ -77,23 +77,10 @@ val _ =
 
 	in
 	
+	(* List.app (fn prog => (print ("Parsing: " ^ prog ^ "\n"); Parse.parse prog; print "\n\n" )) programs *)
 	List.app (fn prog => (print ("Parsing: " ^ prog ^ "\n"); Parse.parse prog; print "\n\n" )) [
-		"../testcases/test1.tig",
-		"../testcases/test2.tig",
-		"../testcases/test3.tig",
-		"../testcases/test4.tig",
-		"../testcases/test5.tig",
-		"../testcases/test6.tig",
-		"../testcases/test7.tig",
-		"../testcases/test8.tig",
-		"../testcases/test9.tig",
-		"../testcases/test10.tig",
-		"../testcases/test11.tig",
-		"../testcases/test12.tig",
-		"../testcases/test13.tig",
-		"../testcases/test14.tig",
-		"../testcases/test15.tig"
-		
+		"../testcases/test49.tig",
+		"../testcases/merge.tig"
 	]
 	end
 

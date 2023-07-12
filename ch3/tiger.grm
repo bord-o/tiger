@@ -48,6 +48,7 @@ exp :
 	| exp NEQ exp (print "exp -> not equal\n")
 	| exp TIMES exp (print "exp -> times\n")
 	| exp MINUS exp (print "exp -> minus\n")
+	| MINUS exp (print "exp -> unary minus\n")
 	| exp DIVIDE exp (print "exp -> divide\n")
 	| exp PLUS exp (print "exp -> plus\n")
 	| exp GT exp (print "exp -> greater than\n")
