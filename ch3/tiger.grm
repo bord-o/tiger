@@ -5,13 +5,13 @@
   | INT of int | STRING of string 
   | COMMA | COLON | SEMICOLON | LPAREN | RPAREN | LBRACK | RBRACK 
   | LBRACE | RBRACE | DOT 
-  | PLUS | MINUS | TIMES | DIVIDE | EQ | NEQ | LT | LE | GT | GE
+  | PLUS | MINUS | UMINUS | TIMES | DIVIDE | EQ | NEQ | LT | LE | GT | GE
   | AND | OR | ASSIGN
   | ARRAY | IF | THEN | ELSE | WHILE | FOR | TO | DO | LET | IN | END | OF 
   | BREAK | NIL
   | FUNCTION | VAR | TYPE 
 
-%nonterm empty | program | exp | expseq | explist | dec | decs | tydec | vardec | fundec |
+%nonterm empty | program | exp | expseq | optexp | explist | dec | decs | tydec | vardec | fundec |
 	ty | tyfields | recordargs | lvalue | lvalue_exp
 
 %pos int
@@ -26,6 +26,18 @@
 	DO OF NIL
 
 %prefer THEN ELSE LPAREN
+
+%right SEMICOLON
+%left THEN
+%left DO OF ELSE
+%left ASSIGN
+%left AND OR
+%nonassoc EQ NEQ GT GE LT LE
+%left PLUS MINUS
+%left TIMES DIVIDE
+%left UMINUS
+
+
 
 %value ID ("bogus")
 %value INT (1)
@@ -48,7 +60,7 @@ exp :
 	| exp NEQ exp (print "exp -> not equal\n")
 	| exp TIMES exp (print "exp -> times\n")
 	| exp MINUS exp (print "exp -> minus\n")
-	| MINUS exp (print "exp -> unary minus\n")
+	| MINUS exp %prec UMINUS (print "exp -> unary minus\n")
 	| exp DIVIDE exp (print "exp -> divide\n")
 	| exp PLUS exp (print "exp -> plus\n")
 	| exp GT exp (print "exp -> greater than\n")
@@ -70,17 +82,17 @@ exp :
 	| WHILE exp DO exp (print "exp -> while do\n")
 	| lvalue_exp (print "exp -> lvalue_exp\n")
 	| lvalue ASSIGN exp (print "exp -> assignment\n")
-	| LET decs IN expseq END (print "exp -> let in end\n")
-	| LPAREN expseq RPAREN (print "exp -> expseq\n")
+	| LET decs IN optexp END (print "exp -> let in end\n")
+	| LPAREN optexp RPAREN (print "exp -> grouped exp\n")
+	| exp SEMICOLON exp (print "exp -> expseq\n")
 
 	| NIL (print "exp -> NIL\n")
 	| EOF (print "exp -> EOF\n")
 
-expseq :
-	empty	(print "expseq -> empty\n")
-	| exp 	(print "expseq -> single\n")
-	| exp SEMICOLON expseq 	(print "expseq -> multiple\n")
-
+optexp :
+	empty (print "optexp -> empty\n")
+	| exp (print "optexp -> exp\n")
+	
 explist :
 	empty (print "expist -> empty\n")
 	| exp (print "explist -> single\n")

@@ -74,14 +74,15 @@ val _ =
 		"../testcases/test8.tig",
 		"../testcases/test9.tig"
 		]
-
+		val testall = true
 	in
-	
-	(* List.app (fn prog => (print ("Parsing: " ^ prog ^ "\n"); Parse.parse prog; print "\n\n" )) programs *)
-	List.app (fn prog => (print ("Parsing: " ^ prog ^ "\n"); Parse.parse prog; print "\n\n" )) [
-		"../testcases/test49.tig",
-		"../testcases/merge.tig"
-	]
+	if testall then
+		List.app (fn prog => (print ("Parsing: " ^ prog ^ "\n"); Parse.parse prog; print "\n\n" )) programs
+	else
+		List.app (fn prog => (print ("Parsing: " ^ prog ^ "\n"); Parse.parse prog; print "\n\n" )) [
+			"../testcases/test49.tig",
+			"../testcases/merge.tig"
+		]
 	end
 
 
