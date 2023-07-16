@@ -87,7 +87,6 @@ exp :
 	| exp SEMICOLON exp (print "exp -> expseq\n")
 
 	| NIL (print "exp -> NIL\n")
-	| EOF (print "exp -> EOF\n")
 
 optexp :
 	empty (print "optexp -> empty\n")
@@ -133,7 +132,7 @@ lvalue :
 
 lvalue_exp :
 	lvalue DOT ID (print "lvalue_exp -> lvalue.ID\n")
-	| lvalue LBRACK exp RBRACK (print "lvalue_exp ->lvalue[exp]\n")
+	| lvalue_exp LBRACK exp RBRACK (print "lvalue_exp ->lvalue[exp]\n")
 	| ID LBRACK exp RBRACK (print "lvalue_exp ->ID[exp]\n")
 	
 recordargs :
