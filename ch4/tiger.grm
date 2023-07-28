@@ -7,13 +7,14 @@ structure A = Absyn
   | INT of int | STRING of string 
   | COMMA | COLON | SEMICOLON | LPAREN | RPAREN | LBRACK | RBRACK 
   | LBRACE | RBRACE | DOT 
-  | PLUS | MINUS | TIMES | DIVIDE | EQ | NEQ | LT | LE | GT | GE
+  | PLUS | MINUS | UMINUS | TIMES | DIVIDE | EQ | NEQ | LT | LE | GT | GE
   | AND | OR | ASSIGN
   | ARRAY | IF | THEN | ELSE | WHILE | FOR | TO | DO | LET | IN | END | OF 
   | BREAK | NIL
   | FUNCTION | VAR | TYPE 
 
-%nonterm  exp | program of A.exp
+%nonterm empty | program | exp | expseq | optexp | explist | dec | decs | tydec | vardec | fundec |
+	ty | tyfields | recordargs | lvalue | lvalue_exp
 
 %pos int
 %verbose
@@ -28,13 +29,118 @@ structure A = Absyn
 
 %prefer THEN ELSE LPAREN
 
+%right SEMICOLON
+%left THEN
+%left DO OF ELSE
+%left ASSIGN
+%left AND OR
+%nonassoc EQ NEQ GT GE LT LE
+%left PLUS MINUS
+%left TIMES DIVIDE
+%left UMINUS
+
+
+
 %value ID ("bogus")
 %value INT (1)
 %value STRING ("")
 
 %%
+(* 
+	TODO: 
+		- lvalue parsing
+		- record assignment/creation
+*)
+program	: exp ( exp)
 
-program	: exp				(exp)
-
+(*
+exp : 
+	STRING (print "exp -> STRING\n"; A.StringExp (STRING, STRINGright))
+	| INT (print "exp -> INT\n"; A.NilExp)
+	| ID (print "exp -> ID\n"; A.NilExp)
+	| exp EQ exp (print "exp -> equal\n"; A.NilExp)
+	| exp NEQ exp (print "exp -> not equal\n"; A.NilExp)
+	| exp TIMES exp (print "exp -> times\n"; A.NilExp)
+	| exp MINUS exp (print "exp -> minus\n"; A.NilExp)
+	| MINUS exp %prec UMINUS (print "exp -> unary minus\n"; A.NilExp)
+	| exp DIVIDE exp (print "exp -> divide\n"; A.NilExp)
+	| exp PLUS exp (print "exp -> plus\n"; A.NilExp)
+	| exp GT exp (print "exp -> greater than\n"; A.NilExp)
+	| exp LT exp (print "exp -> less than\n"; A.NilExp)
+	| exp GE exp (print "exp -> greater equal\n"; A.NilExp)
+	| exp LE exp (print "exp -> less equal\n"; A.NilExp)
+	| exp AND exp (print "exp -> and \n"; A.NilExp)
+	| exp OR exp (print "exp -> or \n"; A.NilExp)
 	
-exp: NIL		(A.NilExp)
+	
+
+	| ID LBRACK exp RBRACK OF exp (print "exp -> array creation\n"; A.NilExp)
+	| ID LBRACE recordargs RBRACE (print "exp -> record creation\n"; A.NilExp)
+	| ID LPAREN explist RPAREN (print "exp -> function call\n"; A.NilExp)
+	
+	| FOR ID ASSIGN exp TO exp DO exp (print "exp -> for"; A.NilExp)
+	| IF exp THEN exp ELSE exp (print "exp -> if then else\n"; A.NilExp)
+	| IF exp THEN exp (print "exp -> if then\n"; A.NilExp)
+	| WHILE exp DO exp (print "exp -> while do\n"; A.NilExp)
+	| lvalue_exp (print "exp -> lvalue_exp\n"; A.NilExp)
+	| lvalue ASSIGN exp (print "exp -> assignment\n"; A.NilExp)
+	| LET decs IN optexp END (print "exp -> let in end\n"; A.NilExp)
+	| LPAREN optexp RPAREN (print "exp -> grouped exp\n"; A.NilExp)
+	| exp SEMICOLON exp (print "exp -> expseq\n"; A.NilExp)
+
+	| NIL (print "exp -> NIL\n"; A.NilExp)
+
+optexp :
+	empty (print "optexp -> empty\n"; A.NilExp)
+	| exp (print "optexp -> exp\n"; A.NilExp)
+	
+explist :
+	empty (print "expist -> empty\n"; A.NilExp)
+	| exp (print "explist -> single\n"; A.NilExp)
+	| exp COMMA explist (print "explist -> multiple\n"; A.NilExp)
+	
+decs : 
+	dec (print "decs -> single dec\n"; A.NilExp)
+	| decs dec (print "decs -> multiple decs\n"; A.NilExp)
+
+dec : 
+	tydec	(print "dec -> tydec\n"; A.NilExp)
+	| vardec	(print "dec -> tydec\n"; A.NilExp)
+	| fundec	(print "dec -> tydec\n"; A.NilExp)
+
+tydec : TYPE ID EQ ty	(print "tydec -> type id eq ty\n"; A.NilExp)
+
+ty : 
+	ID	(print "ty -> ID\n"; A.NilExp)
+	| LBRACE tyfields RBRACE (print "ty -> rec tyfields\n"; A.NilExp)
+	| ARRAY OF ID	(print "ty -> array of id\n"; A.NilExp)
+
+tyfields : 
+	empty	(print "tyfields -> empty\n"; A.NilExp)
+	| ID COLON ID COMMA tyfields	(print "tyfields -> w/ comma\n"; A.NilExp)
+	| ID COLON ID 	(print "tyfields -> single\n"; A.NilExp)
+
+vardec :
+	VAR ID ASSIGN exp	(print "vardec -> w/o type\n"; A.NilExp)
+	| VAR ID COLON ID ASSIGN exp	(print "vardec -> w/ type\n"; A.NilExp)
+
+fundec :
+	FUNCTION ID LPAREN tyfields RPAREN EQ exp	(print "fundec -> w/o type\n"; A.NilExp)
+	| FUNCTION ID LPAREN tyfields RPAREN COLON ID EQ exp	(print "fundec -> w/type \n"; A.NilExp)
+
+lvalue :
+	ID (print "lvalue -> ID\n"; A.NilExp)
+	| lvalue_exp (print "lvalue -> lvalue_exp\n"; A.NilExp)
+
+lvalue_exp :
+	lvalue DOT ID (print "lvalue_exp -> lvalue.ID\n"; A.NilExp)
+	| lvalue_exp LBRACK exp RBRACK (print "lvalue_exp ->lvalue[exp]\n"; A.NilExp)
+	| ID LBRACK exp RBRACK (print "lvalue_exp ->ID[exp]\n"; A.NilExp)
+	
+recordargs :
+	empty (print "recordargs -> empty\n"; A.NilExp)
+	| ID EQ exp (print "recordargs-> single\n"; A.NilExp)
+	| ID EQ exp COMMA recordargs (print "recordargs -> multiple\n"; A.NilExp)
+	
+empty : ()
+*)

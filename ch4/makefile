@@ -1,6 +1,6 @@
 
 all: lexer parser
-	sml sources.cm
+	rlwrap sml sources.cm
 
 clean:
 	rm tiger.grm.sml
