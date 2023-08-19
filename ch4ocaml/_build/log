@@ -1,0 +1,5 @@
+# dune init project ch4ocaml
+# OCAMLPARAM: unset
+# Shared cache: disabled
+# Workspace root: /home/bordo/tiger/ch4ocaml
+# Auto-detected concurrency: 4

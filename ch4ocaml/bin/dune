@@ -1,0 +1,4 @@
+(executable
+ (public_name ch4ocaml)
+ (name main)
+ (libraries ch4ocaml))

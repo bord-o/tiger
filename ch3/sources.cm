@@ -1,15 +1,10 @@
-Group is 
+Group is
 
-absyn.sml
-errormsg.sml
-table.sig
-table.sml
-symbol.sml
-parse.sml
 tiger.lex
+errormsg.sml
+parsetest.sml
 tiger.grm
 
 /home/bordo/smlnj/cml/src/basis.cm
 /home/bordo/smlnj/cml/src/smlnj-lib.cm
 /home/bordo/smlnj/ml-yacc/lib/ml-yacc-lib.cm
-

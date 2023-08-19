@@ -46,17 +46,12 @@ structure A = Absyn
 %value STRING ("")
 
 %%
-(* 
-	TODO: 
-		- lvalue parsing
-		- record assignment/creation
-*)
-program	: exp ( exp)
 
-(*
+program	: exp ( A.StringExp("TEST", 10))
+
 exp : 
 	STRING (print "exp -> STRING\n"; A.StringExp (STRING, STRINGright))
-	| INT (print "exp -> INT\n"; A.NilExp)
+	| INT (print "exp -> INT\n"; A.IntExp(INT))
 	| ID (print "exp -> ID\n"; A.NilExp)
 	| exp EQ exp (print "exp -> equal\n"; A.NilExp)
 	| exp NEQ exp (print "exp -> not equal\n"; A.NilExp)
@@ -143,4 +138,3 @@ recordargs :
 	| ID EQ exp COMMA recordargs (print "recordargs -> multiple\n"; A.NilExp)
 	
 empty : ()
-*)

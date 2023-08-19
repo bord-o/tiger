@@ -182,8 +182,8 @@ val actions =
 fn (i392,defaultPos,stack,
     (()):arg) =>
 case (i392,stack)
-of  ( 0, ( ( _, ( MlyValue.ntVOID exp1, exp1left, exp1right)) :: rest671)) => let val  result = MlyValue.ntVOID (fn _ => ( let val  (exp as exp1) = exp1 ()
- in ((*#line 54.17 "tiger.grm"*) exp(*#line 185.1 "tiger.grm.sml"*)
+of  ( 0, ( ( _, ( MlyValue.ntVOID exp1, exp1left, exp1right)) :: rest671)) => let val  result = MlyValue.ntVOID (fn _ => ( let val  exp1 = exp1 ()
+ in ((*#line 50.17 "tiger.grm"*) A.StringExp("TEST", 10)(*#line 185.1 "tiger.grm.sml"*)
 )
 end; ()))
  in ( LrTable.NT 1, ( result, exp1left, exp1right), rest671)
